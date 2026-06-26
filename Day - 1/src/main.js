@@ -1,26 +1,29 @@
 import "./style.css";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Draggable } from "gsap/Draggable";
+import { Flip } from "gsap/Flip";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(Flip);
 
-gsap.set('.imageDiv', { scale: 0.3 });
+const img = document.querySelector(".specialImage");
+const img2 = document.querySelector(".imageShow img");
 
-gsap.set(".content", { gap: "20rem" });
+img.addEventListener("click", () => {
+  const state = Flip.getState(img);
+  const state2 = Flip.getState(img2);
 
-const tl = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page2",
-    start: "top top",
-    end: "top -100%",
-    scrub: true,
-    pin: true    
-  }
+  document.querySelector(".imageGallery").appendChild(img2);
+  document.querySelector(".imageShow").appendChild(img);
+
+  Flip.from(state, {
+    duration: 1.3,
+    ease: "power3.inOut",
+    scale: true
+  });
+
+  Flip.from(state2, {
+    duration: 1.3,
+    ease: "power3.inOut",
+    scale: true
+  })
 });
-
-tl.to(".imageDiv", {
-  scale: 1,
-  ease: "power4.out",
-}).to(".content", {
-  gap: "1rem"
-}, "<");
