@@ -1,15 +1,18 @@
-import "./style.css"
+import "./style.css";
 import gsap from "gsap";
 
-let obj = {
-  a: 0
-};
+let a = 0;
+
+/* Callback functions */
 
 gsap.to(".box", {
+  x: 500,
+  duration: 1.4,
   delay: 0.6,
-  duration: 1,
-  onUpdate: function() {
-    obj.a += 10;
-    gsap.set(".box", { x: obj.a });
-  }
+  ease: "power2.inOut",
+
+  onUpdate: () => {
+    a+=1;
+    console.log('FRAME', a);
+  },
 });
