@@ -1,43 +1,26 @@
 import "./style.css";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+gsap.registerPlugin(ScrollTrigger);
 
-let count = 0;
+gsap.set('.imageDiv', { scale: 0.3 });
 
-const loaderCount = document.querySelector(".loaderCount h1");
+gsap.set(".content", { gap: "20rem" });
 
-const interval = setInterval(() => {
-  count++;
-  loaderCount.innerHTML = `${count}%`
-
-  if(count === 100) {
-    clearInterval(interval);
-    landingAnimation();
+const tl = gsap.timeline({
+  scrollTrigger: {
+    trigger: ".page2",
+    start: "top top",
+    end: "top -100%",
+    scrub: true,
+    pin: true    
   }
-}, 20);
+});
 
-function landingAnimation() {
-  const tl = gsap.timeline();
-
-  tl.to(".loaderCount", {
-    opacity: 0,
-    duration: 1.6,
-    ease: "power3.out"
-  }).to(".loader", {
-    yPercent: -100,
-    duration: 1.2,
-    ease: 'expo.out'
-  }, "-=0.9").from(".background img", {
-    scale: 1.2,
-    duration: 1.3,
-    ease: 'expo.out'
-  }, "-=0.87").from('.heading h1', {
-    yPercent: 100,
-    duration: 1.2,
-    ease: "expo.out"
-  }, "-=0.8").from('.subheading h2', {
-    yPercent: 100,
-    duration: 1.2,
-    ease: "expo.out"
-  }, "-=0.77");
-}
+tl.to(".imageDiv", {
+  scale: 1,
+  ease: "power4.out",
+}).to(".content", {
+  gap: "1rem"
+}, "<");
